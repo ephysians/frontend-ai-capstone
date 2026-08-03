@@ -1,0 +1,16 @@
+{
+  "name": "frontend-ai-capstone",
+  "version": "1.0.0",
+  "description": "Frontend AI Engineering Capstone",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "jest-environment-jsdom": "^29.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": ["**/tests/**/*.test.js"]
+  }
+}
