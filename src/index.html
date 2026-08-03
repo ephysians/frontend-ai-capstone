@@ -10,11 +10,12 @@
     <main id="app">
       <h1>Settings</h1>
     </main>
-    <script type="module">
-      import { mountSettingsForm } from './settings-form.js';
-      mountSettingsForm(document.getElementById('app'), (data) => {
-        console.log('Settings saved:', data);
-      });
-    </script>
+   <script src="settings-form.js"></script>
+<script>
+  mountSettingsForm(document.getElementById('app'), (data) => {
+    console.log('Settings saved:', data);
+  });
+</script>
   </body>
 </html>
+

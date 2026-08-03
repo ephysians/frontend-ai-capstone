@@ -101,4 +101,6 @@ function mountSettingsForm(container, onSubmit) {
   container.appendChild(createSettingsForm(onSubmit));
 }
 
-module.exports = { validate, createSettingsForm, mountSettingsForm };
+if (typeof module !== 'undefined' && module.exports) {
+  module.exports = { validate, createSettingsForm, mountSettingsForm };
+}
