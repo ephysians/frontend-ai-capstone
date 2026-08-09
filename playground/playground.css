@@ -1,0 +1,11 @@
+/* Inline style={{}} objects can't express :focus-visible (a CSS
+   pseudo-class), so the playground components need a real stylesheet
+   for keyboard focus to be visible at all. Without this, every one of
+   the three components is keyboard-operable but not keyboard-visible,
+   a real, separate accessibility failure from the ones the ARIA roles
+   and focus-trap logic already handle. */
+
+.pg-focusable:focus-visible {
+  outline: 2px solid #6C7BFF;
+  outline-offset: 2px;
+}
