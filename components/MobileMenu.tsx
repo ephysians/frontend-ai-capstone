@@ -7,6 +7,7 @@ const LINKS = [
   { href: '/work', label: 'work' },
   { href: '/about', label: 'about' },
   { href: '/contact', label: 'contact' },
+  { href: '/chat', label: 'chat' },
 ];
 
 export default function MobileMenu() {
