@@ -25,6 +25,28 @@ A professional, open-source repository dedicated to assignments, experiments, an
 
 ---
 
+## Tools
+
+### getCaseStudy
+
+**Input schema**
+```ts
+{ topic: string } // free text describing what the user wants to know, e.g. "the workflow project"
+```
+
+**Return shape**
+```ts
+{
+  id: string;       // e.g. "workflow-discipline"
+  title: string;    // display title of the case study
+  problem: string;  // the problem that was solved
+  decision: string; // the key decision made
+  outcome: string;  // the concrete result
+}
+```
+
+**Errors:** throws if no case study matches the topic; surfaces as a designed error card in the UI, not a crash
+
 ## Overview
 
 In the rapidly evolving landscape of web development, AI assistance is transforming how engineers architect, write, and maintain code. This repository serves as a portfolio of production-ready frontend applications and experiments that demonstrate:

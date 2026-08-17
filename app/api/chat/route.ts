@@ -1,9 +1,7 @@
 import { streamText, convertToModelMessages, type UIMessage } from 'ai';
 import { CHAT_MODEL, SYSTEM_PROMPT } from '@/lib/chat-config';
+import { getCaseStudy } from '@/lib/tools';
 
-// This route is the only place the Gemini API key is ever read
-// (via GOOGLE_GENERATIVE_AI_API_KEY, read internally by @ai-sdk/google),
-// it never reaches the client bundle.
 export async function POST(req: Request) {
   const { messages }: { messages: UIMessage[] } = await req.json();
 
@@ -11,7 +9,11 @@ export async function POST(req: Request) {
     model: CHAT_MODEL,
     system: SYSTEM_PROMPT,
     messages: await convertToModelMessages(messages),
+    tools: { getCaseStudy },
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({
+    onError: (error) =>
+      error instanceof Error ? error.message : 'Something went wrong looking that up.',
+  });
 }
