@@ -9,6 +9,12 @@
 body {
   background: #0F1115;
   color: #E8EAED;
+  /*
+   * Mobile Safari: prevent the body from rubber-band scrolling, which
+   * fights the chat component's auto-scroll pin logic. Individual
+   * scrollable regions opt back in with overscroll-behavior: auto.
+   */
+  overscroll-behavior-y: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -17,9 +23,4 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(2px); }
-  to { opacity: 1; transform: translateY(0); }
 }
