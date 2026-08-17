@@ -3,15 +3,14 @@
 import { useChat } from '@ai-sdk/react';
 import { DefaultChatTransport } from 'ai';
 import { useState, useRef, useEffect, FormEvent } from 'react';
+import { CaseStudyCard } from './CaseStudyCard';
+import type { CaseStudy } from '@/lib/tools';
 
 /**
- * Deliberate scope decision, not an oversight: messages render as plain
+ * Deliberate scope decision, not an oversight: text parts render as plain
  * text (whitespace-pre-wrap), not parsed markdown. The mentor tips warn
  * that naive markdown rendering breaks visually mid-stream (unclosed code
- * fences, dangling asterisks). The correct fix is a streaming-aware
- * renderer or per-block buffering, both real engineering effort beyond
- * this assignment's scope for a text-only Q&A assistant that isn't
- * expected to return code blocks. Noted here instead of silently skipped.
+ * fences, dangling asterisks). Noted here instead of silently skipped.
  */
 
 export function Chat() {
@@ -25,9 +24,6 @@ export function Chat() {
 
   const isBusy = status === 'submitted' || status === 'streaming';
 
-  // Auto-scroll, implemented as the mentor tips describe: pin to bottom
-  // only while the user is already there, release the moment they scroll
-  // up, and never fight a user who's deliberately reading scrollback.
   function handleScroll() {
     const el = scrollRef.current;
     if (!el) return;
@@ -40,10 +36,6 @@ export function Chat() {
     const el = scrollRef.current;
     if (!el) return;
     el.scrollTop = el.scrollHeight;
-    // Re-runs on every message/content change, including token-by-token
-    // streaming updates, since `messages` is a new array reference each
-    // time useChat appends a chunk. This is what keeps the pin working
-    // *during* streaming, not just after it finishes.
   }, [messages, isPinnedToBottom]);
 
   function jumpToLatest() {
@@ -62,12 +54,6 @@ export function Chat() {
     setIsPinnedToBottom(true);
   }
 
-  // Thinking indicator shows only in the gap between "submitted" and the
-  // first real content arriving, this is the handoff the mentor tips call
-  // out: it should feel like one continuous state transition into the
-  // streamed text, not an indicator that vanishes and text that pops in
-  // a frame later. Checking whether the last assistant message actually
-  // has text content yet is what makes that handoff correct.
   const lastMessage = messages[messages.length - 1];
   const lastMessageHasText =
     lastMessage?.role === 'assistant' &&
@@ -79,21 +65,103 @@ export function Chat() {
       <div ref={scrollRef} onScroll={handleScroll} className="flex-1 overflow-y-auto px-4 py-4 flex flex-col gap-3">
         {messages.length === 0 && (
           <p className="font-mono text-sm text-muted text-center mt-8">
-            Ask about the work, the case studies, or how the AI-assisted workflow actually holds up.
+            Try: &quot;tell me about the workflow project&quot; or &quot;what happened with onboarding?&quot;
           </p>
         )}
 
         {messages.map((message) => {
-          const text = message.parts
-            ?.filter((p) => p.type === 'text')
-            .map((p) => (p.type === 'text' ? p.text : ''))
-            .join('');
-
           const isUser = message.role === 'user';
-
           return (
-            <div key={message.id} className={`max-w-[85%] rounded-lg px-3 py-2 text-sm whitespace-pre-wrap ${isUser ? 'self-end bg-accent text-base' : 'self-start bg-white/5 text-ink'}`}>
-              {text}
+            <div key={message.id} className={`flex flex-col gap-2 max-w-[85%] ${isUser ? 'self-end' : 'self-start'}`}>
+              {message.parts?.map((part, i) => {
+                // Plain text part
+                if (part.type === 'text' && part.text) {
+                  return (
+                    <div key={i} className={`rounded-lg px-3 py-2 text-sm whitespace-pre-wrap ${isUser ? 'bg-accent text-base' : 'bg-white/5 text-ink'}`}>
+                      {part.text}
+                    </div>
+                  );
+                }
+
+                // Tool part: getCaseStudy, four distinct states per the
+                // brief. Each answers a different question for the user
+                // (what's happening / with what input / what came back /
+                // what went wrong), not the same card relabeled.
+                if (part.type === 'tool-getCaseStudy') {
+                  const key = part.toolCallId;
+                  switch (part.state) {
+                    case 'input-streaming':
+                      return (
+                        <div key={key} className="rounded-lg border border-dashed border-white/20 px-3 py-2 text-xs font-mono text-muted animate-pulse">
+                          reading question...
+                        </div>
+                      );
+                    case 'input-available': {
+                      // Cast is safe, not a workaround for a real bug: the
+                      // AI SDK's generic UIMessage type can't automatically
+                      // narrow to this specific tool's schema without extra
+                      // type wiring, but the shape is guaranteed at runtime
+                      // by our own Zod schema in lib/tools.ts.
+                      const topic = (part.input as { topic?: string } | undefined)?.topic;
+                      return (
+                        <div key={key} className="flex flex-col gap-2">
+                          <div className="rounded-lg border border-accent/40 px-3 py-2 text-xs font-mono text-accent flex items-center gap-2">
+                            <span className="inline-block w-2 h-2 rounded-full bg-accent animate-pulse" />
+                            looking up: {topic ?? '...'}
+                          </div>
+                          {/* Skeleton mirrors CaseStudyCard layout while data is in-flight */}
+                          <div className="rounded-lg border border-white/10 bg-panel p-4 text-sm animate-pulse">
+                            <div className="h-4 w-3/4 rounded bg-white/10 mb-3" />
+                            <div className="grid gap-3">
+                              <div>
+                                <div className="h-2 w-14 rounded bg-white/10 mb-1" />
+                                <div className="space-y-1.5">
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-2/3 rounded bg-white/10" />
+                                </div>
+                              </div>
+                              <div>
+                                <div className="h-2 w-16 rounded bg-white/10 mb-1" />
+                                <div className="space-y-1.5">
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-4/5 rounded bg-white/10" />
+                                </div>
+                              </div>
+                              <div>
+                                <div className="h-2 w-14 rounded bg-white/10 mb-1" />
+                                <div className="space-y-1.5">
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-full rounded bg-white/10" />
+                                  <div className="h-3 w-1/2 rounded bg-white/10" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    }
+                    case 'output-available':
+                      return (
+                        <div key={key} className="animate-[fadeIn_0.2s_ease]">
+                          <CaseStudyCard data={part.output as CaseStudy} />
+                        </div>
+                      );
+                    case 'output-error':
+                      return (
+                        <div key={key} role="alert" className="rounded-lg border border-remove/40 bg-remove/10 px-3 py-2 text-sm text-remove">
+                          Couldn&apos;t find a case study for that. Try &quot;workflow&quot; or &quot;onboarding&quot;.
+                        </div>
+                      );
+                    default:
+                      return null;
+                  }
+                }
+
+                return null;
+              })}
             </div>
           );
         })}
@@ -132,19 +200,11 @@ export function Chat() {
           className="flex-1 min-w-0 rounded-md bg-base border border-white/10 px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         />
         {isBusy ? (
-          <button
-            type="button"
-            onClick={stop}
-            className="font-mono text-sm bg-remove text-white px-4 py-2 rounded-md shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
-          >
+          <button type="button" onClick={stop} className="font-mono text-sm bg-remove text-white px-4 py-2 rounded-md shrink-0 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             Stop
           </button>
         ) : (
-          <button
-            type="submit"
-            disabled={!input.trim()}
-            className="font-mono text-sm bg-accent text-base px-4 py-2 rounded-md shrink-0 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
-          >
+          <button type="submit" disabled={!input.trim()} className="font-mono text-sm bg-accent text-base px-4 py-2 rounded-md shrink-0 disabled:opacity-50 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink">
             Send
           </button>
         )}
