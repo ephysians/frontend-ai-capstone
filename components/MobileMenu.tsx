@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { Menu, X } from 'lucide-react';
 
 const LINKS = [
   { href: '/work', label: 'work' },
@@ -20,18 +21,24 @@ export default function MobileMenu() {
         onClick={() => setOpen((v) => !v)}
         aria-expanded={open}
         aria-controls="mobile-nav"
-        className="font-mono text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded px-2 py-1"
+        aria-label={open ? 'Close navigation menu' : 'Open navigation menu'}
+        className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
       >
-        {open ? 'close' : 'menu'}
+        {open ? <X aria-hidden="true" size={18} /> : <Menu aria-hidden="true" size={18} />}
       </button>
+
       {open && (
-        <nav id="mobile-nav" aria-label="Mobile" className="absolute left-0 right-0 top-full bg-panel border-t border-white/10 px-4 py-4 flex flex-col gap-3">
+        <nav
+          id="mobile-nav"
+          aria-label="Mobile"
+          className="absolute left-0 right-0 top-full z-20 flex flex-col gap-3 border-t border-white/10 bg-panel px-4 py-4 shadow-xl"
+        >
           {LINKS.map((link) => (
             <Link
               key={link.href}
               href={link.href}
               onClick={() => setOpen(false)}
-              className="font-mono text-sm text-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded"
+              className="rounded px-1 py-2 font-mono text-sm text-muted hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
             >
               {link.label}
             </Link>

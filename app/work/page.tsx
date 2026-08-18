@@ -1,5 +1,6 @@
 import DiffBlock from '@/components/DiffBlock';
 import Link from 'next/link';
+import Image from "next/image";
 
 const CASES = [
   {
@@ -28,28 +29,45 @@ export default function WorkPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16 sm:py-24">
       <p className="font-mono text-sm text-accent mb-3">work</p>
-      <h1 className="font-display font-semibold text-2xl sm:text-4xl text-ink">Case studies, not a portfolio grid</h1>
+      <h1 className="font-display font-semibold text-2xl sm:text-4xl text-ink">
+        Case studies, not a portfolio grid
+      </h1>
       <p className="mt-4 text-muted max-w-xl">
-        Two real pieces of work, each with the actual problem, the decisions I made and rejected, and what
-        came of it, honestly, including what&apos;s still in progress.
+        Two real pieces of work, each with the actual problem, the decisions I
+        made and rejected, and what came of it, honestly, including what&apos;s
+        still in progress.
       </p>
 
       <div className="mt-12 flex flex-col gap-12">
         {CASES.map((c) => (
           <article key={c.id} className="border-t border-white/10 pt-8">
-            <h2 className="font-display font-semibold text-xl text-ink">{c.title}</h2>
+            <h2 className="font-display font-semibold text-xl text-ink">
+              {c.title}
+            </h2>
             <div className="mt-4 grid gap-4 sm:grid-cols-3">
               <div>
-                <p className="font-mono text-xs text-muted uppercase tracking-wide mb-1">the problem</p>
-                <p className="text-sm text-ink/90 leading-relaxed">{c.problem}</p>
+                <p className="font-mono text-xs text-muted uppercase tracking-wide mb-1">
+                  the problem
+                </p>
+                <p className="text-sm text-ink/90 leading-relaxed">
+                  {c.problem}
+                </p>
               </div>
               <div>
-                <p className="font-mono text-xs text-muted uppercase tracking-wide mb-1">what I did</p>
-                <p className="text-sm text-ink/90 leading-relaxed">{c.decision}</p>
+                <p className="font-mono text-xs text-muted uppercase tracking-wide mb-1">
+                  what I did
+                </p>
+                <p className="text-sm text-ink/90 leading-relaxed">
+                  {c.decision}
+                </p>
               </div>
               <div>
-                <p className="font-mono text-xs text-muted uppercase tracking-wide mb-1">what came of it</p>
-                <p className="text-sm text-ink/90 leading-relaxed">{c.outcome}</p>
+                <p className="font-mono text-xs text-muted uppercase tracking-wide mb-1">
+                  what came of it
+                </p>
+                <p className="text-sm text-ink/90 leading-relaxed">
+                  {c.outcome}
+                </p>
               </div>
             </div>
           </article>
@@ -58,7 +76,9 @@ export default function WorkPage() {
 
       <figure className="mt-16 border-t border-white/10 pt-8">
         <figcaption className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="font-mono text-xs text-muted uppercase tracking-wide">Backlog Tracker — live demo</p>
+          <p className="font-mono text-xs text-muted uppercase tracking-wide">
+            Backlog Tracker — live demo
+          </p>
           <a
             href="https://backlog-tracker-app.vercel.app"
             target="_blank"
@@ -74,33 +94,50 @@ export default function WorkPage() {
           rel="noopener noreferrer"
           className="block overflow-hidden rounded-md border border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
         >
-          <img
+          <Image
             src="/backlog-tracker-ui.png"
             alt="Backlog Tracker live demo showing backlog metrics, task filters, and five open tasks"
-            className="w-full"
+            width={1200}
+            height={675}
+            className="w-full h-auto"
           />
         </a>
       </figure>
 
       <div className="mt-16">
-        <p className="font-mono text-xs text-muted mb-3 uppercase tracking-wide">a mistake caught, not hidden</p>
+        <p className="font-mono text-xs text-muted mb-3 uppercase tracking-wide">
+          a mistake caught, not hidden
+        </p>
         <DiffBlock
           label="settings-form.js"
           lines={[
-            { type: 'context', text: 'function mountSettingsForm(container, onSubmit) {' },
-            { type: 'context', text: '  container.appendChild(createSettingsForm(onSubmit));' },
-            { type: 'context', text: '}' },
-            { type: 'remove', text: 'module.exports = { validate, createSettingsForm, mountSettingsForm };' },
             {
-              type: 'add',
+              type: "context",
+              text: "function mountSettingsForm(container, onSubmit) {",
+            },
+            {
+              type: "context",
+              text: "  container.appendChild(createSettingsForm(onSubmit));",
+            },
+            { type: "context", text: "}" },
+            {
+              type: "remove",
+              text: "module.exports = { validate, createSettingsForm, mountSettingsForm };",
+            },
+            {
+              type: "add",
               text: "if (typeof module !== 'undefined' && module.exports) { module.exports = { validate, createSettingsForm, mountSettingsForm }; }",
             },
           ]}
         />
       </div>
-        <div className="mt-16 border-t border-white/10 pt-8">
-        <p className="font-display font-semibold text-xl text-ink">Have a frontend backlog?</p>
-        <p className="mt-2 text-muted max-w-xl">Let&apos;s talk about the work that needs a careful pair of eyes.</p>
+      <div className="mt-16 border-t border-white/10 pt-8">
+        <p className="font-display font-semibold text-xl text-ink">
+          Have a frontend backlog?
+        </p>
+        <p className="mt-2 text-muted max-w-xl">
+          Let&apos;s talk about the work that needs a careful pair of eyes.
+        </p>
         <Link
           href="/contact"
           className="mt-5 inline-flex font-mono text-sm bg-accent text-base font-medium px-5 py-3 rounded-md hover:bg-accent/90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
