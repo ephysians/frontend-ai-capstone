@@ -1,4 +1,5 @@
 import DiffBlock from '@/components/DiffBlock';
+import Link from 'next/link';
 
 const CASES = [
   {
@@ -70,6 +71,16 @@ export default function WorkPage() {
             },
           ]}
         />
+      </div>
+        <div className="mt-16 border-t border-white/10 pt-8">
+        <p className="font-display font-semibold text-xl text-ink">Have a frontend backlog?</p>
+        <p className="mt-2 text-muted max-w-xl">Let&apos;s talk about the work that needs a careful pair of eyes.</p>
+        <Link
+          href="/contact"
+          className="mt-5 inline-flex font-mono text-sm bg-accent text-base font-medium px-5 py-3 rounded-md hover:bg-accent/90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        >
+          Get in touch
+        </Link>
       </div>
     </div>
   );

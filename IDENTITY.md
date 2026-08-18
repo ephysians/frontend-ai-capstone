@@ -183,7 +183,7 @@ Tone: calm, dark, code-first. The work is the loudest thing on the page.
 | Page | Image | Type | Status |
 |---|---|---|---|
 | `/` | DiffBlock proof snippet | Code UI (real) | ✅ Built — renders from real data |
-| `/work` | Backlog Tracker screenshot | Real capture | ⚠️ Still need to gather |
+| `/work` | Backlog Tracker screenshot | Real capture | ✅ Built — renders from real data |
 | `/work` | DiffBlock: caught bug | Code UI (real) | ✅ Built — renders from real data |
 | `/about` | No image | Text-only | ✅ Deliberate — see reasoning below |
 | `/chat` | No image | UI component | ✅ The chat interface is the visual |
