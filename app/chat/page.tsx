@@ -1,4 +1,5 @@
 import { Chat } from '@/components/Chat';
+import Link from 'next/link';
 
 // Dev-only: ?sabotage=429 | 500 | network | malformed
 // Completely ignored in production (the route handler guards it).
@@ -34,6 +35,17 @@ export default function ChatPage({
       )}
 
       <Chat sabotage={sabotage} />
+
+      <div className="mt-8 border-t border-white/10 pt-8">
+        <p className="font-display font-semibold text-xl text-ink">Need help with a frontend backlog?</p>
+        <p className="mt-2 text-muted max-w-xl">If the answers are useful, let&apos;s talk about the work itself.</p>
+        <Link
+          href="/contact"
+          className="mt-5 inline-flex font-mono text-sm bg-accent text-base font-medium px-5 py-3 rounded-md hover:bg-accent/90 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+        >
+          Get in touch
+        </Link>
+      </div>
     </div>
   );
 }

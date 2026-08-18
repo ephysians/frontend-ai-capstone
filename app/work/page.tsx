@@ -56,6 +56,32 @@ export default function WorkPage() {
         ))}
       </div>
 
+      <figure className="mt-16 border-t border-white/10 pt-8">
+        <figcaption className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <p className="font-mono text-xs text-muted uppercase tracking-wide">Backlog Tracker — live demo</p>
+          <a
+            href="https://backlog-tracker-app.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-xs text-accent hover:text-accent/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded"
+          >
+            Open the live app
+          </a>
+        </figcaption>
+        <a
+          href="https://backlog-tracker-app.vercel.app"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="block overflow-hidden rounded-md border border-white/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+        >
+          <img
+            src="/backlog-tracker-ui.png"
+            alt="Backlog Tracker live demo showing backlog metrics, task filters, and five open tasks"
+            className="w-full"
+          />
+        </a>
+      </figure>
+
       <div className="mt-16">
         <p className="font-mono text-xs text-muted mb-3 uppercase tracking-wide">a mistake caught, not hidden</p>
         <DiffBlock
