@@ -17,3 +17,5 @@ node_modules/
 # Misc
 .DS_Store
 *.log
+test-results/
+playwright-report/

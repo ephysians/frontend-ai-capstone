@@ -43,6 +43,7 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
   });
 
   const [input, setInput] = useState('');
+  const [inputTouched, setInputTouched] = useState(false);
   const [isPinnedToBottom, setIsPinnedToBottom] = useState(true);
   const [isRetrying, setIsRetrying] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -84,10 +85,12 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
     e.preventDefault();
 
     const trimmed = input.trim();
+    setInputTouched(true);
     if (!trimmed || isBusy) return;
 
     sendMessage({ text: trimmed });
     setInput('');
+    setInputTouched(false);
     setIsPinnedToBottom(true);
   }
 
@@ -126,7 +129,10 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
                 <button
                   key={prompt}
                   type="button"
-                  onClick={() => setInput(prompt)}
+                  onClick={() => {
+                    setInput(prompt);
+                    setInputTouched(false);
+                  }}
                   className="rounded-md border border-white/10 px-3 py-2 text-left font-mono text-xs text-muted transition-colors hover:border-white/20 hover:text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
                 >
                   {prompt}
@@ -280,13 +286,16 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
         </button>
       )}
 
-      <form onSubmit={handleSubmit} className="flex gap-2 border-t border-white/10 p-3">
+      <form onSubmit={handleSubmit} className="flex flex-wrap gap-2 border-t border-white/10 p-3">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
+          onBlur={() => setInputTouched(true)}
           placeholder="Ask about the work..."
           aria-label="Message"
+          aria-describedby="message-error"
+          aria-invalid={inputTouched && !input.trim()}
           disabled={isBusy}
           style={{ fontSize: '16px' }}
           className="min-w-0 flex-1 rounded-md border border-white/10 bg-base px-3 py-2 text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
@@ -309,6 +318,11 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
           >
             <Send aria-hidden="true" size={16} />
           </button>
+        )}
+        {inputTouched && !input.trim() && (
+          <p id="message-error" role="alert" className="basis-full font-mono text-xs text-remove">
+            Message is required.
+          </p>
         )}
       </form>
     </div>

@@ -76,6 +76,14 @@ I chose procedural geometry instead of a GLB asset, which removes model decoding
 
 I would add a small real-world case-study asset, automated WebGL failure coverage in browser tests, and deployed-device profiling across a representative low-power phone. The current scope intentionally prioritizes a clear interaction and responsible loading over visual complexity.
 
+## FE-09 Testing Workflow
+
+The repository uses Vitest with React Testing Library for accessible component tests and Playwright for the primary chat flow. Run the checks locally with `npm run typecheck`, `npm run lint`, `npm run test:unit`, and `npm run test:e2e`. Component tests mock `useChat`; the Playwright test intercepts `POST /api/chat`, so no test reads the AI credential or calls the real model. GitHub Actions runs the type check, lint, component suite, Playwright, and production build on every push.
+
+### Self-Verification
+
+The first component run exposed a Vitest JSX-runtime configuration failure (`React is not defined`), which was fixed by enabling the automatic React JSX transform. A later run caught an accessible-name mismatch in the retry assertion; the test was corrected to query the button's actual accessible name. The first Playwright fixture also failed because it used the wrong stream format; it was replaced with the AI SDK UI-message SSE sequence. The final local suite passed after each repair.
+
 ---
 
 ## 🎯 Key Goals
