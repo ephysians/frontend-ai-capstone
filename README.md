@@ -54,6 +54,28 @@ In the rapidly evolving landscape of web development, AI assistance is transform
 2. **Robust development guardrails**, ensuring linting, formatting, and strict typing.
 3. **Leveraging AI collaboratively** to boost productivity, accelerate testing, and solve complex algorithms.
 
+## FE-AA2: Review Pipeline 3D Experience
+
+### What I Built
+
+The `/experience` route is a small procedural React Three Fiber scene representing an AI-assisted frontend review pipeline: Prompt, Build, Tests, and Review. It uses four low-poly blocks, simple lighting, a constrained perspective camera, and touch-capable orbit controls.
+
+### Interaction
+
+Clicking a block selects that stage and changes its material state. The Workflow, Tests, and Risk lenses change which stage is visually emphasized. Orbiting is available for inspecting the scene, but selection and lens changes are the meaningful interactions.
+
+### Performance
+
+The 3D code is client-only and loaded through a Next.js dynamic import with `ssr: false`, so the server-rendered route does not initialize a Canvas during the initial render. The scene has four box meshes, three connector cylinders, one floor plane, three lights, no external model, no texture downloads, no HDR environment, and no post-processing. Canvas DPR is capped to `1.5` to limit mobile pixel work. The added runtime dependencies are `three`, `@react-three/fiber`, and `@react-three/drei`; their exact installed sizes remain visible in the lockfile and build output rather than being represented as an invented FPS claim.
+
+### What I Did to Keep It Sane
+
+I chose procedural geometry instead of a GLB asset, which removes model decoding and texture weight entirely. The scene uses a small lighting setup, no shadows or continuous expensive effects, a bounded camera, and a responsive canvas. Users with `prefers-reduced-motion`, unavailable WebGL, or a scene initialization failure receive the same selectable pipeline as a static implementation. The local environment can verify responsive rendering and the loading/fallback paths, but it does not provide a reliable cross-device FPS profiler, so no exact FPS number is claimed here.
+
+### What I Would Add With More Time
+
+I would add a small real-world case-study asset, automated WebGL failure coverage in browser tests, and deployed-device profiling across a representative low-power phone. The current scope intentionally prioritizes a clear interaction and responsible loading over visual complexity.
+
 ---
 
 ## 🎯 Key Goals
