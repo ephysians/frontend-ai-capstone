@@ -33,6 +33,28 @@ body {
   overscroll-behavior-y: none;
 }
 
+.signature-hero {
+  background:
+    radial-gradient(circle at 70% 24%, rgba(25, 113, 103, 0.22), transparent 42%),
+    linear-gradient(135deg, #0a1717 0%, #0f1115 52%, #0d1516 100%);
+}
+
+.signature-shader {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.signature-hero__content {
+  padding: 1.5rem;
+  border-left: 1px solid rgba(232, 234, 237, 0.16);
+  background: linear-gradient(90deg, rgba(8, 14, 13, 0.86), rgba(8, 14, 13, 0.52), transparent);
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation-duration: 0.01ms !important;
