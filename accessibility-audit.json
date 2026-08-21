@@ -1,0 +1,354 @@
+{
+  "home": {
+    "url": "https://frontend-ai-capstone-two.vercel.app/",
+    "sequenceLen": 7,
+    "cycleDetected": true,
+    "sequence": [
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev frontend engineering, revi"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": "Open navigation menu",
+        "tabindex": null,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Review a live demo"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "See the work"
+      },
+      {
+        "tag": "PRE",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "- \"Leveraged AI-powered workflows to del"
+      },
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev frontend engineering, revi"
+      }
+    ],
+    "pageShot": "access-screenshots\\page-home.png",
+    "focusShot": "access-screenshots\\focus-home.png",
+    "waveShot": null
+  },
+  "chat": {
+    "url": "https://frontend-ai-capstone-two.vercel.app/chat",
+    "sequenceLen": 10,
+    "cycleDetected": true,
+    "sequence": [
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev ask about the work Ask, d"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": "Open navigation menu",
+        "tabindex": null,
+        "text": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Tell me about the workflow project"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "What's still in progress on the Agro-Tou"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "How did you catch the module export bug?"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "What does the Backlog Tracker actually d"
+      },
+      {
+        "tag": "INPUT",
+        "id": null,
+        "role": null,
+        "aria": "Message",
+        "tabindex": null,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Get in touch"
+      },
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev ask about the work Ask, d"
+      }
+    ],
+    "pageShot": "access-screenshots\\page-chat.png",
+    "focusShot": "access-screenshots\\focus-chat.png",
+    "waveShot": "access-screenshots\\wave-chat.png"
+  },
+  "experience": {
+    "url": "https://frontend-ai-capstone-two.vercel.app/experience",
+    "sequenceLen": 14,
+    "cycleDetected": true,
+    "sequence": [
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev FE-AA2 / interactive 3D R"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": "Open navigation menu",
+        "tabindex": null,
+        "text": ""
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "01 Prompt"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "02 Build"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "03 Tests"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "04 Review"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Workflow Lens"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Tests Lens"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Risk Lens"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Use static view"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Back to the work"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Open the static fallback"
+      },
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev FE-AA2 / interactive 3D R"
+      }
+    ],
+    "pageShot": "access-screenshots\\page-experience.png",
+    "focusShot": "access-screenshots\\focus-experience.png",
+    "waveShot": null
+  },
+  "work": {
+    "url": "https://frontend-ai-capstone-two.vercel.app/work",
+    "sequenceLen": 8,
+    "cycleDetected": true,
+    "sequence": [
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev work Case studies, not a "
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev"
+      },
+      {
+        "tag": "BUTTON",
+        "id": null,
+        "role": null,
+        "aria": "Open navigation menu",
+        "tabindex": null,
+        "text": ""
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Open the live app"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": ""
+      },
+      {
+        "tag": "PRE",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "function mountSettingsForm(container, on"
+      },
+      {
+        "tag": "A",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "Get in touch"
+      },
+      {
+        "tag": "BODY",
+        "id": null,
+        "role": null,
+        "aria": null,
+        "tabindex": null,
+        "text": "emmanuel.dev work Case studies, not a "
+      }
+    ],
+    "pageShot": "access-screenshots\\page-work.png",
+    "focusShot": "access-screenshots\\focus-work.png",
+    "waveShot": null
+  }
+}

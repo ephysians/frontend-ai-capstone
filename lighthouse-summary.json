@@ -1,0 +1,70 @@
+{
+  "lighthouse-home-mobile.html": {
+    "fetchTime": "2026-08-21T03:27:38.504Z",
+    "requestedUrl": "https://frontend-ai-capstone-two.vercel.app/",
+    "categories": {
+      "performance": 0.69,
+      "accessibility": 0.95,
+      "best-practices": 1,
+      "seo": 1
+    },
+    "metrics": {
+      "FCP": 1930.684,
+      "LCP": 2603.684,
+      "TBT": 1379.5000000000002,
+      "INP": null,
+      "CLS": 0
+    }
+  },
+  "lighthouse-chat-mobile.html": {
+    "fetchTime": "2026-08-21T03:28:26.165Z",
+    "requestedUrl": "https://frontend-ai-capstone-two.vercel.app/chat",
+    "categories": {
+      "performance": 0.87,
+      "accessibility": 0.96,
+      "best-practices": 1,
+      "seo": 1
+    },
+    "metrics": {
+      "FCP": 1155.595,
+      "LCP": 2358.5950000000003,
+      "TBT": 412.0000000000002,
+      "INP": null,
+      "CLS": 0
+    }
+  },
+  "lighthouse-experience-mobile.html": {
+    "fetchTime": "2026-08-21T03:29:13.566Z",
+    "requestedUrl": "https://frontend-ai-capstone-two.vercel.app/experience",
+    "categories": {
+      "performance": 0.7,
+      "accessibility": 0.95,
+      "best-practices": 1,
+      "seo": 1
+    },
+    "metrics": {
+      "FCP": 1426.161,
+      "LCP": 1853.161,
+      "TBT": 2969,
+      "INP": null,
+      "CLS": 0.0006089950199446321
+    }
+  },
+  "lighthouse-work-mobile.html": {
+    "fetchTime": "2026-08-21T03:30:27.923Z",
+    "requestedUrl": "https://frontend-ai-capstone-two.vercel.app/work",
+    "categories": {
+      "performance": 0.87,
+      "accessibility": 1,
+      "best-practices": 1,
+      "seo": 1
+    },
+    "metrics": {
+      "FCP": 1187.8445000000002,
+      "LCP": 2525.8445,
+      "TBT": 429.5,
+      "INP": null,
+      "CLS": 0
+    }
+  }
+}

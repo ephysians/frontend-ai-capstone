@@ -1,7 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
-import { Component, ReactNode, useEffect, useState } from 'react';
+import { Component, ReactNode, useEffect, useState, useRef } from 'react';
 import { REVIEW_STAGES, ReviewLens, StaticReviewPipeline } from './StaticReviewPipeline';
 
 const ReviewScene = dynamic(() => import('./ReviewScene'), {
@@ -51,6 +51,25 @@ export default function Experience({ forceFallback = false }: { forceFallback?: 
   }, []);
 
   const showFallback = forceFallback || reducedMotion || !webglAvailable || sceneFailed;
+  const [showScene, setShowScene] = useState(false);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (showFallback) return;
+    if (showScene) return;
+    const el = containerRef.current;
+    if (!el) return setShowScene(true);
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setShowScene(true);
+          obs.disconnect();
+        }
+      });
+    }, { rootMargin: '200px' });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [showFallback, showScene]);
 
   if (showFallback) {
     return (
@@ -60,11 +79,14 @@ export default function Experience({ forceFallback = false }: { forceFallback?: 
       />
     );
   }
-
   return (
-    <div>
+    <div ref={containerRef}>
       <SceneErrorBoundary onError={() => setSceneFailed(true)}>
-        <ReviewScene selectedId={selectedId} lens={lens} reducedMotion={reducedMotion} onSelect={setSelectedId} />
+        {showScene ? (
+          <ReviewScene selectedId={selectedId} lens={lens} reducedMotion={reducedMotion} onSelect={setSelectedId} />
+        ) : (
+          <div className="flex h-[360px] items-center justify-center border border-white/10 bg-[#0B0D11] font-mono text-xs text-muted sm:h-[430px]">Preparing the review scene...</div>
+        )}
       </SceneErrorBoundary>
       <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4" role="group" aria-label="Select a review stage">
         {REVIEW_STAGES.map((stage) => (

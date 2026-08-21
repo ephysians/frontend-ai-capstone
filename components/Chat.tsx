@@ -110,6 +110,17 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
   const showThinking = status === 'submitted' || (status === 'streaming' && !lastMessageHasText);
   const errorMessage = classifyError(error);
 
+  // Announce completed assistant messages to screen readers only when not streaming
+  const [announce, setAnnounce] = useState('');
+  useEffect(() => {
+    if (status === 'streaming') return;
+    const last = messages[messages.length - 1];
+    if (last && last.role === 'assistant') {
+      // Announce a short notification to avoid duplicating visible text for test/e2e
+      setAnnounce('Assistant replied');
+    }
+  }, [messages, status]);
+
   return (
     <div className="flex h-[70dvh] max-h-[640px] flex-col overflow-hidden rounded-lg border border-white/10 bg-panel">
       <div
@@ -123,7 +134,7 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
             <p className="text-center font-mono text-sm text-muted">
               Grounded in the actual case studies, not a generic assistant.
             </p>
-            <p className="text-center font-mono text-xs text-muted/60">Try one of these:</p>
+            <p className="text-center font-mono text-xs text-muted">Try one of these:</p>
             <div className="flex w-full max-w-sm flex-col gap-2">
               {STARTER_PROMPTS.map((prompt) => (
                 <button
@@ -238,7 +249,7 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
 
         {showThinking && (
           <div
-            className="self-start max-w-[85%] rounded-lg bg-white/5 px-3 py-2 font-mono text-sm text-muted"
+            className="self-start max-w-[85%] rounded-lg bg-white/5 px-3 py-2 font-mono text-sm text-ink"
             role="status"
             aria-live="polite"
             aria-label="Assistant is thinking"
@@ -275,6 +286,9 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
         )}
       </div>
 
+      {/* Live region for completed assistant messages (polite, avoids announcing partial streams) */}
+      <div aria-live="polite" aria-atomic="false" className="sr-only">{announce}</div>
+
       {!isPinnedToBottom && (
         <button
           type="button"
@@ -294,7 +308,7 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
           onBlur={() => setInputTouched(true)}
           placeholder="Ask about the work..."
           aria-label="Message"
-          aria-describedby="message-error"
+          aria-describedby={inputTouched && !input.trim() ? 'message-error' : undefined}
           aria-invalid={inputTouched && !input.trim()}
           disabled={isBusy}
           style={{ fontSize: '16px' }}
@@ -319,10 +333,12 @@ export function Chat({ sabotage = null }: { sabotage?: SabotageMode }) {
             <Send aria-hidden="true" size={16} />
           </button>
         )}
-        {inputTouched && !input.trim() && (
+        {inputTouched && !input.trim() ? (
           <p id="message-error" role="alert" className="basis-full font-mono text-xs text-remove">
             Message is required.
           </p>
+        ) : (
+          <span id="message-error" className="sr-only" aria-hidden="true" />
         )}
       </form>
     </div>

@@ -73,7 +73,13 @@ function PipelineObjects({ selectedId, lens, reducedMotion, onSelect }: { select
 export default function ReviewScene({ selectedId, lens, reducedMotion, onSelect }: { selectedId: string; lens: ReviewLens; reducedMotion: boolean; onSelect: (id: string) => void }) {
   return (
     <div className="h-[360px] w-full overflow-hidden border border-white/10 bg-[#0B0D11] sm:h-[430px]" aria-label="Interactive 3D review pipeline">
-      <Canvas camera={{ position: [0, 2.2, 8.6], fov: 40 }} dpr={[1, 1.5]} gl={{ antialias: true, powerPreference: 'high-performance' }} onCreated={({ gl }) => { gl.setClearColor('#0B0D11'); }}>
+      <Canvas
+        camera={{ position: [0, 2.2, 8.6], fov: 40 }}
+        dpr={[1, 1]}
+        gl={{ antialias: false, powerPreference: 'low-power' }}
+        onCreated={({ gl }) => { gl.setClearColor('#0B0D11'); }}
+        frameloop="demand"
+      >
         <ambientLight intensity={1.5} />
         <directionalLight position={[2, 5, 5]} intensity={2.2} />
         <pointLight position={[-4, 2, 2]} intensity={10} distance={12} color="#6C7BFF" />

@@ -76,7 +76,7 @@ export default function WorkPage() {
 
       <figure className="mt-16 border-t border-white/10 pt-8">
         <figcaption className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <p className="font-mono text-xs text-muted uppercase tracking-wide">
+          <p className="font-mono text-xs text-ink uppercase tracking-wide">
             Backlog Tracker — live demo
           </p>
           <a
@@ -99,6 +99,7 @@ export default function WorkPage() {
             alt="Backlog Tracker live demo showing backlog metrics, task filters, and five open tasks"
             width={1200}
             height={675}
+            sizes="(max-width: 640px) 100vw, 700px"
             className="w-full h-auto"
           />
         </a>

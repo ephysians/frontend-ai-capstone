@@ -17,8 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${sora.variable} ${inter.variable} ${jetbrainsMono.variable}`}>
       <body className="font-body">
+        <a href="#content" className="skip-link focus-visible:inline-block sr-only">Skip to content</a>
         <Nav />
-        <main>{children}</main>
+        <main id="content">{children}</main>
       </body>
     </html>
   );
