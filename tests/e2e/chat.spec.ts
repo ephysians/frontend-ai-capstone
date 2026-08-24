@@ -18,8 +18,10 @@ test('user can ask about the work and see the assistant response', async ({ page
 
   await page.goto('/chat');
   const message = page.getByRole('textbox', { name: 'Message' });
-  await message.fill('Tell me about the workflow project');
-  await page.getByRole('button', { name: 'Send message' }).click();
+  await message.pressSequentially('Tell me about the workflow project');
+  const sendButton = page.getByRole('button', { name: 'Send message' });
+  await expect(sendButton).toBeEnabled();
+  await sendButton.click();
 
   await expect(page.getByText('The workflow response is available in this test.')).toBeVisible();
 });

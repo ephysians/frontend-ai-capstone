@@ -2,6 +2,44 @@ import { streamText, convertToModelMessages, type UIMessage } from 'ai';
 import { CHAT_MODEL, SYSTEM_PROMPT } from '@/lib/chat-config';
 import { getCaseStudy } from '@/lib/tools';
 
+export const maxDuration = 30;
+
+const MAX_MESSAGES = 20;
+const MAX_MESSAGE_CHARS = 4_000;
+const MAX_TOTAL_CHARS = 12_000;
+const RATE_LIMIT_WINDOW_MS = 60_000;
+const RATE_LIMIT_REQUESTS = 10;
+const requestLog = new Map<string, number[]>();
+
+function getClientKey(req: Request): string {
+  return req.headers.get('x-forwarded-for')?.split(',')[0]?.trim() ||
+    req.headers.get('x-real-ip') ||
+    'unknown';
+}
+
+function isRateLimited(clientKey: string): boolean {
+  const now = Date.now();
+  const recentRequests = (requestLog.get(clientKey) || []).filter(
+    (timestamp) => now - timestamp < RATE_LIMIT_WINDOW_MS
+  );
+
+  if (recentRequests.length >= RATE_LIMIT_REQUESTS) {
+    requestLog.set(clientKey, recentRequests);
+    return true;
+  }
+
+  recentRequests.push(now);
+  requestLog.set(clientKey, recentRequests);
+  return false;
+}
+
+function getMessageText(message: UIMessage): string {
+  return message.parts
+    .filter((part) => part.type === 'text')
+    .map((part) => part.text)
+    .join('');
+}
+
 // ── Dev-only sabotage mechanism ──────────────────────────────────────────────
 // Trigger failure modes from the browser without touching code.
 // Usage: change the fetch URL in Chat.tsx to /api/chat?sabotage=<mode>
@@ -65,6 +103,13 @@ export async function POST(req: Request) {
     if (sabotageResponse) return sabotageResponse;
   }
 
+  if (isRateLimited(getClientKey(req))) {
+    return Response.json(
+      { error: 'Too many requests. Please wait a moment before trying again.' },
+      { status: 429, headers: { 'Retry-After': '60' } }
+    );
+  }
+
   // Guard: malformed request body
   let messages: UIMessage[];
   try {
@@ -74,6 +119,31 @@ export async function POST(req: Request) {
       return Response.json(
         { error: 'Invalid request: messages must be an array.' },
         { status: 400 }
+      );
+    }
+
+    if (messages.length === 0 || messages.length > MAX_MESSAGES) {
+      return Response.json(
+        { error: `Invalid request: messages must contain 1-${MAX_MESSAGES} items.` },
+        { status: 400 }
+      );
+    }
+
+    const totalChars = messages.reduce((total, message) => {
+      if (!message || typeof message !== 'object' || !Array.isArray(message.parts)) {
+        return Number.POSITIVE_INFINITY;
+      }
+      return total + getMessageText(message).length;
+    }, 0);
+
+    if (
+      !Number.isFinite(totalChars) ||
+      messages.some((message) => getMessageText(message).length > MAX_MESSAGE_CHARS) ||
+      totalChars > MAX_TOTAL_CHARS
+    ) {
+      return Response.json(
+        { error: 'Invalid request: message content is too long.' },
+        { status: 413 }
       );
     }
   } catch {
