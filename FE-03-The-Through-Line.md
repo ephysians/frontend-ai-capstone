@@ -1,10 +1,10 @@
-# FE-03 — The Through-Line: Map Content & CTAs
+# FE-03 - The Through-Line: Map Content & CTAs
 
-## Assignment context
+## Audit basis
 
-This document maps the existing Frontend AI Engineering capstone to one portfolio claim and one primary visitor action. It is a content and strategy artifact for FE-03, grounded in the current routes, shipped features, audit evidence, and the authoritative Week 1 positioning.
+This document is based on a read-only audit of the repository as it exists on 2026-08-25. The audit checked the route implementations for `/`, `/chat`, `/experience`, and `/work`; `README.md`, `AUDIT.md`, `IDENTITY.md`, `WORKFLOW.md`, `CLAUDE.md`, and `FE-AA3-Signature-Hero.md`; the case-study data in `app/work/page.tsx` and `lib/tools.ts`; tracked screenshots and public assets; tests and package scripts; and recent Git history.
 
-The through-line is not generic portfolio credibility. It is a specific proof sequence: show how AI-assisted frontend work is directed, inspected, tested, and shipped, then invite the visitor to inspect a live implementation for themselves.
+The repository contains unrelated material in the `/work` page and chat data. Because this assignment is about the completed capstone, that material is excluded from the capstone inventory below and is not used as evidence for a next case.
 
 ## Week 1 source-of-truth proof statement
 
@@ -14,148 +14,134 @@ The through-line is not generic portfolio credibility. It is a specific proof se
 >
 > LinkedIn shows job titles, not whether AI-assisted code actually ships clean. This portfolio is the only place that claim gets tested against real, reviewable work.
 
-## Sharpened one-line claim
+The repository also uses the shorter homepage claim: **I ship what AI writes, after I've actually read it.** The longer Week 1 statement remains the source of truth for this map.
 
-> **I use AI-assisted engineering workflows to turn frontend backlog into production-ready interfaces that can survive real review.**
+## Audit findings
 
-This sharpens the original without changing its promise. The Week 1 statement remains the source of truth: the claim is about directing AI-assisted work and reviewing the result, not about speed alone or unverified business impact.
+### Genuine capstone work inventory
 
-## Target person
+The audit found **five genuine capstone work items**. This count separates a documented case study from completed feature or product artifacts; it does not count the unrelated second `/work` entry.
 
-**Technical co-founders with frontend backlog.**
+| Work item | Assignment or repository provenance | Status | Evidence found |
+| --- | --- | --- | --- |
+| **AI-assisted engineering workflow** | `WORKFLOW.md`; the workflow drill commits; the first `/work` case | **Completed** | A documented vague-versus-precise prompt comparison, 22 passing tests, the browser module/CommonJS mismatch found by code review, the guarded export fix, and the final repository. |
+| **AI Chat Experience** | Chat implementation commits; FE-08 error/edge-state commit; `README.md`; `/chat` and `components/Chat.tsx` | **Completed** | Streaming Gemini route, grounded `getCaseStudy` tool, validation and rate limits, Send/Stop/error/retry states, unit tests, Playwright chat coverage, deployed-site reference, screenshots, and `AUDIT.md`. |
+| **FE-AA2 Review Pipeline 3D Experience** | `/experience` route label, `Experience`, `ReviewScene`, and `StaticReviewPipeline` components; interactive-experience commit | **Completed** | Interactive Prompt -> Build -> Tests -> Review scene, stage/lens controls, deferred loading, DPR cap, WebGL/reduced-motion fallback, route screenshot, and Lighthouse results in `AUDIT.md`. |
+| **FE-AA3 Signature Hero: A Fullscreen Shader** | `FE-AA3-Signature-Hero.md`, `SignatureShader.tsx`, `/`, and the Signature Hero commit | **Completed** | Dedicated assignment document, GLSL source and uniform decisions, implementation, production URL, homepage screenshot, reduced-motion/WebGL fallback details, and resource cleanup description. |
+| **Backlog Tracker** | Live URL used by `/`, `/work`, and `/contact`; `public/backlog-tracker-ui.png`; README and route links | **Completed as a live product reference; source is not in this repository** | Public URL `https://backlog-tracker-app.vercel.app`, real UI screenshot, link from the portfolio, and descriptive README/chat references. The product source, tests, and deployment history are not present here. |
 
-The intended reader is responsible for getting frontend work shipped and needs evidence that AI-assisted delivery can produce code and interfaces they will not have to rewrite. They are not being asked to trust a title or a generic promise; they are being given a route into reviewable work.
+### What `/work` actually contains
 
-## Primary action
+The current `CASES` array in `app/work/page.tsx` has two entries, rendered before the Backlog Tracker figure:
 
-**Open a live demo and judge the implementation yourself.**
+1. **Building a repeatable AI-assisted engineering workflow** - the genuine capstone case study. It uses the Problem, Decision, and Outcome structure and records the browser module/CommonJS mismatch that passed the tests but would have broken in the browser.
+2. An unrelated second entry - excluded from this capstone audit and from this FE-03 map.
 
-The primary action is the Week 1 action, expressed in the current interface as **Review a live demo** or **Open the live app**. Contact is a later conversation, not a replacement for proof. Every page should make it easy to move toward a live implementation, either directly or through the work and case-study sequence.
+The Backlog Tracker image and live link are separate from the `CASES` array. They are a product reference, not a written case study in the current `/work` page.
+
+Therefore, the current `/work` page contains **one genuine capstone case study** and **one separate completed product reference**. Across the repository, the full genuine capstone inventory is the five-item list above.
+
+### Strongest work
+
+The strongest direct case for the Week 1 claim is the **AI-assisted engineering workflow** because it contains the clearest review outcome: a browser-breaking module mismatch was found even though all 22 tests passed. It is the strongest narrative proof that reading and reviewing AI-assisted output changed the result.
+
+The strongest shipped interactive implementation is the **AI Chat Experience**. It has the broadest recorded behavior and validation: streaming, grounded tool use, input and request protections, failure states, unit tests, Playwright coverage, accessibility evidence, and a production deployment. The **Backlog Tracker** is the clearest direct live-demo handoff, but its source and test history cannot be verified from this repository.
 
 ## Content map
 
-The route maps below follow the exact rendered section order in the current application. Each CTA is named as it exists or is implied by the route, then connected back to the single Week 1 action.
+The map follows the current route implementations and keeps one primary visitor action: open a live implementation and judge it.
 
-### `/` — Home
+### `/` - Home
 
-**Purpose:** Establish the claim immediately, frame the difference between reviewed and merely generated output, and send the visitor to concrete work.
+| Order | Section | Evidence/work represented | CTA and role |
+| --- | --- | --- | --- |
+| 1 | Signature Hero | FE-AA3 fullscreen WebGL shader with HTML proof copy | No CTA in the copy block; establishes the claim. |
+| 2 | Hero action row | Backlog Tracker live product reference and `/work` | **Review a live demo** -> `backlog-tracker-app.vercel.app`; **See the work** -> `/work`. |
+| 3 | DiffBlock | Workflow case: 22 green tests did not prove browser correctness | No CTA; gives the visitor a concrete reason to inspect the implementation. |
 
-| Order | Section | Work or case assigned | CTA | Contribution to the primary action |
-| --- | --- | --- | --- | --- |
-| 1 | Signature hero: eyebrow, headline, and supporting proof statement | The overall reviewed AI-assisted frontend practice; no single project is assigned yet | None in the copy block | Creates the question the live work must answer: can this process produce code worth reviewing? |
-| 2 | Hero action row | Backlog Tracker as the live product reference; `/work` as the case-study path | **Review a live demo** → Backlog Tracker; **See the work** → `/work` | The first link goes directly to the Week 1 action. The second gives visitors who need context a route to proof before they inspect the demo. |
-| 3 | DiffBlock: “what reviewed, not just generated looks like” | Workflow discipline, including the real example of a green test suite that still hid a browser module/CommonJS mismatch | None | Makes the reason for judging the implementation concrete and prepares the visitor to inspect the work rather than accept marketing language. |
+### `/chat` - AI Chat Experience
 
-### `/chat` — AI Chat Experience
+| Order | Section | Evidence/work represented | CTA and role |
+| --- | --- | --- | --- |
+| 1 | Label and headline | AI Chat Experience | No CTA; frames the interaction as evidence. |
+| 2 | Context paragraph | Grounded case-study assistant | Starter prompts invite inspection of the documented work. |
+| 3 | Chat interface | Streaming Gemini, grounded `getCaseStudy`, Send/Stop, error and retry states | **Send message**; the response points back to real work. |
+| 4 | Closing prompt | Frontend-backlog positioning | **Get in touch** -> `/contact`; secondary after proof. |
 
-**Purpose:** Let the visitor test the portfolio claim through an AI experience that is itself grounded, bounded, streamed, and reviewable.
+### `/experience` - FE-AA2 Review Pipeline
 
-| Order | Section | Work or case assigned | CTA | Contribution to the primary action |
-| --- | --- | --- | --- | --- |
-| 1 | Section label and headline: “Ask, don't just read.” | AI Chat Experience | None | Sets the interaction as an active test of the work rather than passive portfolio browsing. |
-| 2 | Context paragraph | The actual case studies, including workflow and onboarding | Starter questions are presented as prompts inside the chat experience | Gives the visitor a low-friction way to discover which implementation or case study to inspect next. |
-| 3 | Chat interface | Streaming Gemini chat; Send/Stop controls; error and retry states; grounded `getCaseStudy` responses | **Send message**; use the conversation to ask about the work | Demonstrates production behavior directly. The assistant points to real work, which then leads the visitor to the live implementation and case-study evidence. |
-| 4 | Closing backlog prompt and contact link | The broader frontend-backlog problem | **Get in touch** → `/contact` | This is a secondary path for a visitor already persuaded by the interaction. `/contact` should still preserve the live-demo invitation so contact does not replace the Week 1 action. |
+| Order | Section | Evidence/work represented | CTA and role |
+| --- | --- | --- | --- |
+| 1 | Label, headline, and explanation | Prompt -> Build -> Tests -> Review method | No CTA; explains the review model. |
+| 2 | Interactive scene | Procedural geometry, stage selection, workflow/evidence/risk lenses | Select a stage and lens to inspect the implementation. |
+| 3 | Detail blocks | Geometry, interaction, and fallback decisions | No CTA; makes resilience decisions legible. |
+| 4 | Link row | `/work` and accessible fallback | **Back to the work** -> `/work`; **Open the static fallback** -> `/experience?fallback=1`. |
 
-### `/experience` — 3D Review Pipeline
+### `/work` - Case Study and Live Product Reference
 
-**Purpose:** Make the human review layer visible as an interactive model of the AI-assisted engineering process.
-
-| Order | Section | Work or case assigned | CTA | Contribution to the primary action |
-| --- | --- | --- | --- | --- |
-| 1 | Section label and headline: “Review the pipeline before it ships.” | FE-AA2 Review Pipeline 3D Experience | None | Names the review discipline behind the portfolio claim. |
-| 2 | Explanatory paragraph | Prompt → Build → Tests → Review pipeline | None | Explains what the visitor is about to inspect without presenting the scene as a client or business outcome. |
-| 3 | Interactive `Experience` scene | React Three Fiber procedural scene; stage selection; Workflow, Tests, and Risk lenses; dynamic loading; DPR cap; WebGL and reduced-motion fallback | Select a stage and change a lens within the experience | Lets the visitor examine the review process directly, reinforcing why the implementation should be judged through real behavior. |
-| 4 | Three detail blocks: geometry, interaction, fallback | Performance and resilience decisions in FE-AA2 | None | Supplies technical evidence for the scene without inventing an FPS or user outcome. |
-| 5 | Closing link row | The work index and the static accessible experience | **Back to the work** → `/work`; **Open the static fallback** → `/experience?fallback=1` | Moves the visitor to the case studies and then toward the live demo. The fallback link keeps the proof inspectable for users without WebGL or with reduced motion. |
-
-### `/work` — Case Studies and Live Demo
-
-**Purpose:** Provide the deepest written evidence, distinguish completed proof from work still in progress, and offer the clearest live implementation path.
-
-| Order | Section | Work or case assigned | CTA | Contribution to the primary action |
-| --- | --- | --- | --- | --- |
-| 1 | Section label, headline, and introduction | The portfolio's case-study standard: problem, decision, and outcome | None | Establishes that the page contains evidence rather than a generic project grid. |
-| 2 | Case study 1: repeatable AI-assisted engineering workflow | Workflow discipline; a real browser-compatibility bug caught despite passing tests | None | Provides the strongest written proof that review changed the result. It gives the visitor criteria for judging the live implementation. |
-| 3 | Case study 2: agro-tourism onboarding design | In-progress onboarding and partner-registration work; explicitly not publicly launched | None | Shows honest scope and decision-making without presenting unfinished work as a shipped business outcome. |
-| 4 | Backlog Tracker figure and live product image | Backlog Tracker, the deployed live demo | **Open the live app** → `backlog-tracker-app.vercel.app` | This is the clearest direct handoff to the Week 1 action: open the implementation and judge it. |
-| 5 | DiffBlock: “a mistake caught, not hidden” | The CommonJS/browser ES module mismatch and its guarded export fix | None | Gives the visitor a concrete review artifact to compare against the live work. |
-| 6 | Closing backlog prompt and contact link | Frontend work needing a careful pair of eyes | **Get in touch** → `/contact` | Offers conversation after proof. It should remain subordinate to the live-demo invitation in the overall journey. |
-
-## Strongest-work prioritization
-
-The strongest proof should be presented approximately in this order:
-
-1. **AI Chat Experience**
-2. **3D Review Pipeline**
-3. **Signature Shader Hero**
-
-This is a proof order, not a claim about client value or business outcomes.
-
-1. **AI Chat Experience leads** because it is the most complete demonstration of production behavior under scrutiny. It combines a real AI/LLM-powered interface with streaming responses, Send/Stop interaction, error and retry behavior, request validation, input limits, rate limiting, server-only credentials, accessibility work, WAVE testing, Playwright coverage, and a public deployment. It asks the visitor to interact with a system whose failure paths and boundaries are visible.
-2. **The 3D Review Pipeline follows** because it makes the method legible. The procedural React Three Fiber scene represents Prompt → Build → Tests → Review and includes interaction, deferred loading, a DPR cap, WebGL fallback, reduced-motion handling, and Lighthouse/performance work. It demonstrates that review is part of the build process, not only a sentence in the bio.
-3. **The Signature Shader Hero comes third** because it is a distinctive implementation detail and a strong first impression, but it is less direct evidence of the full backlog-to-production workflow. The fullscreen GLSL shader, `u_time`, `u_resolution`, `u_mouse`, procedural value noise/FBM, visibility handling, DPR cap, reduced-motion fallback, and HTML layering show technical craft. The hero earns attention; the chat and pipeline do more of the argumentative work.
-
-The current home route necessarily opens with the Signature Shader Hero as the visual entry point. The prioritization above describes how the portfolio's proof should be discussed and linked: lead the explanation with the most reviewable shipped behavior, use the 3D pipeline to explain the method, and use the shader as a memorable signature rather than the sole proof of the claim.
+| Order | Section | Evidence/work represented | CTA and role |
+| --- | --- | --- | --- |
+| 1 | Heading and introduction | Case-study standard: problem, decision, outcome | No CTA. |
+| 2 | Genuine workflow case | AI-assisted engineering workflow and reviewed browser bug | No CTA; supplies the strongest narrative proof. |
+| 3 | Unrelated entry | Excluded from this capstone map | No capstone claim should be based on it. |
+| 4 | Backlog Tracker figure | Completed live product reference | **Open the live app** -> `backlog-tracker-app.vercel.app`; primary proof handoff. |
+| 5 | DiffBlock | Guarded export correction | No CTA; concrete review artifact. |
+| 6 | Closing prompt | Frontend-backlog positioning | **Get in touch** -> `/contact`; secondary action. |
 
 ## CTA ladder
 
-All route-level actions should ladder toward the same Week 1 action:
-
 ```text
-Homepage
-  Review a live demo ------------------------------┐
-  See the work -> /work                            |
-                                                     v
-Work
-  Open the live app ------------------------------> Open the implementation and judge it
-  Get in touch -> /contact                         ^
-                                                     |
-Experience                                           |
-  Back to the work -> /work ------------------------┘
-  Static fallback -> inspect the same proof accessibly
-
-Chat
-  Ask about the work -> grounded case-study context -> live implementation
-  Get in touch -> /contact -> preserve the live-demo invitation
+Home -> Review a live demo -> Backlog Tracker
+Home -> See the work -> genuine workflow case -> Open the live app
+Experience -> Back to the work -> Open the live app
+Chat -> ask about the work -> inspect evidence -> live implementation
+Contact -> Review the live demo or email
 ```
 
-The ladder has one primary destination: inspect a live implementation. The case studies, chat, and interactive pipeline are different ways to earn enough context and trust to take that action. **Get in touch** is a valid later-stage CTA for an already-convinced visitor, but it should not displace the Week 1 instruction to open a demo and judge the work.
+The primary action is to open a live implementation and judge the code. Contact is a later-stage option, not a substitute for proof.
 
-## Still Need to Gather
+## How to add the next case
 
-### Evidence already available
+The exact insertion point is the `CASES` array in `app/work/page.tsx`: add the new object immediately after the genuine `workflow-discipline` object and before the unrelated existing object. Because the current page renders the array in order, this puts the next verified capstone case directly after the lead case. Do not use the unrelated entry as the insertion anchor or as capstone evidence.
 
-- Public Vercel deployment at `https://frontend-ai-capstone-two.vercel.app/`.
-- A deployed Backlog Tracker reference linked from `/` and `/work`.
-- Existing Lighthouse reports and summary data for `/`, `/chat`, `/experience`, and `/work`.
-- Accessibility audit artifacts, including the recorded WAVE results and screenshots.
-- Unit tests with React Testing Library and Playwright E2E coverage.
-- Chromium, Firefox, and WebKit automated chat-flow coverage.
-- FE-AA2 implementation and fallback behavior.
-- FE-AA3 implementation details and its project documentation.
-- FE-11 request limits, rate protection, server-only AI credentials, environment documentation, and production README.
+Use the same object shape already used by the page:
 
-### Evidence still worth gathering
+1. **Problem:** state the concrete problem supported by the assignment or implementation evidence.
+2. **What I did / Decision:** state the implementation and a meaningful decision or tradeoff documented in the evidence.
+3. **What came of it / Outcome:** state only a verified result, validation result, deployment fact, or honest in-progress status.
 
-- Polished final screenshots selected specifically for the portfolio's strongest proof sequence.
-- Mobile screenshots for the homepage, chat, experience, and work routes.
-- Concise performance comparisons that remain faithful to the recorded Lighthouse runs and their limitations.
-- Genuine testimonials from clients or mentors, if they become available. No testimonial should be written or implied before it exists.
-- Manual Safari and mobile Safari validation; WebKit is the closest automated check, not a substitute for those platforms.
-- Unfinished internship work once it is genuinely complete and reviewable.
+Give the case a unique `id` and specific `title`. Add a matching entry to `lib/tools.ts` only when it should be returned by the grounded chat. Before calling it complete, run `npm run typecheck`, `npm run lint`, `npm run test:unit`, and the relevant Playwright test. This FE-03 edit does not add the case to application code.
 
-These are evidence improvements, not invented gaps to fill with claims. The current artifacts are enough to support the through-line; the remaining items would make the proof easier to scan or broaden its validation.
+### Most defensible next case
 
-## FE-03 rubric checklist
+The repository supports **FE-AA3 Signature Hero: A Fullscreen Shader** as the next case study. It is a completed named assignment with a dedicated document, implementation, production URL, and screenshot evidence. It is not currently represented as a written case in `/work`.
 
-- [x] **Single memorable claim:** The sharpened claim preserves the Week 1 proof statement and names AI-assisted workflows, frontend backlog, production-ready interfaces, and real review.
-- [x] **Ordered page sections:** `/`, `/chat`, `/experience`, and `/work` are mapped in their exact current rendered section order.
-- [x] **Strongest work leads:** AI Chat Experience, 3D Review Pipeline, and Signature Shader Hero are explicitly prioritized as portfolio proof, without client or business-outcome claims.
-- [x] **Every page has a named CTA:** Each mapped route has named actions or clearly identified in-experience actions, including the direct live-app links and supporting navigation.
-- [x] **CTAs ladder to one action:** All paths ultimately point toward opening a live demo and judging the implementation; contact remains a later-stage option.
-- [x] **Honest gather-list:** Available evidence is separated from worthwhile future evidence, with no fabricated metrics, testimonials, users, clients, or outcomes.
+The next case should be added only after its three beats are written from `FE-AA3-Signature-Hero.md` and the implementation, without inventing a user or business outcome. FE-AA2 Review Pipeline is a second supported candidate, but FE-AA3 is the more defensible first addition because its assignment document is explicit and complete.
 
-## Implementation status
+## Evidence still missing or unverified
 
-This FE-03 deliverable is a content and strategy artifact only. It does not require application-code, UI, route, styling, configuration, dependency, or test changes. Any future implementation of this map should be a separate task with its own scope and validation.
+- Backlog Tracker source code, tests, and deployment history are outside this repository and therefore unverified here.
+- No external testimonials or client/mentor quote is present.
+- Native Safari and mobile Safari validation is not recorded; WebKit automation is documented instead.
+- The FE-AA2 assignment document is not present by filename; its identity is supported by the route label and implementation, but the assignment-document evidence is weaker than FE-AA3's.
+
+## FE-03 compliance table
+
+| Requirement | Status | Evidence | Remaining action |
+| --- | --- | --- | --- |
+| Preserve the Week 1 proof statement | **PASS** | The exact statement is retained above and matches the homepage copy in `app/page.tsx`. | None. |
+| Audit and document actual portfolio work | **PASS** | Five genuine capstone work items are listed with provenance, status, and evidence; the unrelated `/work` entry is explicitly excluded. | None for the repository audit; keep future claims evidence-based. |
+| Content map for the current portfolio | **PASS** | `/`, `/chat`, `/experience`, and `/work` are mapped from their current rendered sections and CTAs. | None. |
+| Strongest work identified from evidence | **PASS** | Workflow is identified as strongest narrative proof; AI Chat as strongest shipped interactive implementation; Backlog Tracker as the direct live-demo handoff with source limitations stated. | None. |
+| How to add the next case | **PASS** | Exact `CASES` insertion point and Problem -> Decision -> Outcome steps are documented above. | Add only a verified case; do not use the excluded entry. |
+| Named next piece of work | **PASS** | FE-AA3 Signature Hero: A Fullscreen Shader is a completed, named assignment with repository implementation, deployment, screenshots, and dedicated documentation. | Add its evidence-based three-beat case to `/work` when the scheduled reminder prompts that future task. |
+| Reminder evidence | **PASS** | External Google Calendar evidence supplied by the user shows the saved reminder titled **“Add FE-AA3 Signature Hero case study to portfolio”**, scheduled for Monday, August 31, 2026 at 9:00 AM, with the description `Add the FE-AA3 Signature Hero case to /work using Problem → What I Did → Outcome.` The screenshot is not stored in this repository, so no repository path is claimed. | None. Retain the supplied screenshot with the submission evidence. |
+| Submission readiness | **PASS** | The one-line claim, content map, honest evidence list, named next work, and external Google Calendar reminder evidence are all documented. | None for FE-03. |
+
+### Reminder evidence
+
+**Pass.** The supplied external Google Calendar screenshot shows the saved reminder **“Add FE-AA3 Signature Hero case study to portfolio”** for Monday, August 31, 2026 at 9:00 AM, with the description `Add the FE-AA3 Signature Hero case to /work using Problem → What I Did → Outcome.` The screenshot is external evidence and is not stored in the repository; no filename or path is invented.
+
+## Submission conclusion
+
+FE-03 is **READY FOR SUBMISSION**. The five required deliverables are documented: the one-line claim, the pages-to-sections-to-cases-to-CTA content map, the honest still-need-to-gather list, the named FE-AA3 Signature Hero next piece of work, and the external Google Calendar reminder evidence.
