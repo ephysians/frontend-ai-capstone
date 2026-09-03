@@ -1,5 +1,11 @@
 import Link from "next/link";
 
+const PROFILE_LINKS = [
+  { href: "https://www.linkedin.com/in/emmanuel-chuks/", label: "LinkedIn" },
+  { href: "https://github.com/ephysians", label: "GitHub" },
+  { href: "https://drive.google.com/file/d/1VvD_wMLWODIBU7GwzYctUpJjKQotFfWK/view?usp=sharing", label: "CV" },
+];
+
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-16 sm:py-24">
@@ -14,12 +20,25 @@ export default function AboutPage() {
         AI-assisted development from a shortcut into a discipline: documented,
         tested, and reviewable, not just fast.
       </p>
-      <Link
-        href="/work"
-        className="mt-8 inline-flex font-mono text-sm text-muted hover:text-ink px-5 py-3 rounded-md border border-white/10 hover:border-white/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
-      >
-        See the work
-      </Link>
+      <div className="mt-8 flex flex-wrap gap-3">
+        {PROFILE_LINKS.map((link) => (
+          <a
+            key={link.href}
+            href={link.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-mono text-sm text-muted hover:text-ink px-5 py-3 rounded-md border border-white/10 hover:border-white/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+          >
+            {link.label}
+          </a>
+        ))}
+        <Link
+          href="/work"
+          className="font-mono text-sm text-muted hover:text-ink px-5 py-3 rounded-md border border-white/10 hover:border-white/20 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2"
+        >
+          See the work
+        </Link>
+      </div>
     </div>
   );
 }
