@@ -13,12 +13,17 @@ export default function ContactPage() {
   const [touched, setTouched] = useState({ name: false, email: false, message: false });
 
   const isBusy = status === 'submitting';
+  const MAX_NAME = 100;
+  const MAX_MESSAGE = 2000;
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailInvalid = touched.email && email.trim().length > 0 && !emailRegex.test(email.trim());
+  const emailEmpty = touched.email && !email.trim();
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setTouched({ name: true, email: true, message: true });
 
-    if (!name.trim() || !email.trim() || !message.trim()) return;
+    if (!name.trim() || !email.trim() || !message.trim() || !emailRegex.test(email.trim()) || message.length > MAX_MESSAGE || name.length > MAX_NAME) return;
 
     setStatus('submitting');
     setErrorMessage('');
@@ -95,8 +100,8 @@ export default function ContactPage() {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, name: true }))}
-                aria-invalid={touched.name && !name.trim()}
-                aria-describedby={touched.name && !name.trim() ? 'name-error' : undefined}
+                aria-invalid={touched.name && (!name.trim() || name.length > MAX_NAME)}
+                aria-describedby={touched.name ? 'name-error' : undefined}
                 disabled={isBusy}
                 style={{ fontSize: '16px' }}
                 className="rounded-md border border-white/10 bg-base px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50"
@@ -104,6 +109,11 @@ export default function ContactPage() {
               {touched.name && !name.trim() && (
                 <p id="name-error" role="alert" className="font-mono text-xs text-remove">
                   Name is required.
+                </p>
+              )}
+              {touched.name && name.trim().length > MAX_NAME && (
+                <p id="name-error" role="alert" className="font-mono text-xs text-remove">
+                  Name is too long.
                 </p>
               )}
             </div>
@@ -118,15 +128,20 @@ export default function ContactPage() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, email: true }))}
-                aria-invalid={touched.email && !email.trim()}
-                aria-describedby={touched.email && !email.trim() ? 'email-error' : undefined}
+                aria-invalid={emailEmpty || emailInvalid}
+                aria-describedby={emailEmpty || emailInvalid ? 'email-error' : undefined}
                 disabled={isBusy}
                 style={{ fontSize: '16px' }}
                 className="rounded-md border border-white/10 bg-base px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50"
               />
-              {touched.email && !email.trim() && (
+              {emailEmpty && (
                 <p id="email-error" role="alert" className="font-mono text-xs text-remove">
                   Email is required.
+                </p>
+              )}
+              {emailInvalid && (
+                <p id="email-error" role="alert" className="font-mono text-xs text-remove">
+                  Please enter a valid email address.
                 </p>
               )}
             </div>
@@ -141,17 +156,29 @@ export default function ContactPage() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 onBlur={() => setTouched((t) => ({ ...t, message: true }))}
-                aria-invalid={touched.message && !message.trim()}
-                aria-describedby={touched.message && !message.trim() ? 'message-error' : undefined}
+                aria-invalid={touched.message && (!message.trim() || message.length > MAX_MESSAGE)}
+                aria-describedby={touched.message ? 'message-error' : undefined}
                 disabled={isBusy}
                 style={{ fontSize: '16px' }}
                 className="rounded-md border border-white/10 bg-base px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50 resize-none"
               />
-              {touched.message && !message.trim() && (
-                <p id="message-error" role="alert" className="font-mono text-xs text-remove">
-                  Message is required.
+              <div className="flex justify-between">
+                {touched.message && !message.trim() && (
+                  <p id="message-error" role="alert" className="font-mono text-xs text-remove">
+                    Message is required.
+                  </p>
+                )}
+                {touched.message && message.length > MAX_MESSAGE && (
+                  <p id="message-error" role="alert" className="font-mono text-xs text-remove">
+                    Message is too long.
+                  </p>
+                )}
+                <p className={`font-mono text-xs ml-auto ${
+                  message.length > MAX_MESSAGE ? 'text-remove' : 'text-muted'
+                }`}>
+                  {message.length}/{MAX_MESSAGE}
                 </p>
-              )}
+              </div>
             </div>
 
             {status === 'error' && (
