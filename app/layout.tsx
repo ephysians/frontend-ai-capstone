@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Sora, Inter, JetBrains_Mono } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
 import Nav from '@/components/Nav';
+import Footer from '@/components/Footer';
 import './globals.css';
 
 const sora = Sora({ subsets: ['latin'], variable: '--font-sora', weight: ['500', '600', '700'] });
@@ -11,6 +13,20 @@ export const metadata: Metadata = {
   title: 'Emmanuel Chukwukere Obinna',
   description:
     'I help technical co-founders drowning in frontend backlog by directing AI-assisted workflows to ship production-ready code they do not have to rewrite.',
+  openGraph: {
+    title: 'Emmanuel Chukwukere Obinna',
+    description:
+      'I help technical co-founders drowning in frontend backlog by directing AI-assisted workflows to ship production-ready code they do not have to rewrite.',
+    url: 'https://frontend-ai-capstone-two.vercel.app',
+    siteName: 'Emmanuel Chukwukere Obinna',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'Emmanuel Chukwukere Obinna',
+    description:
+      'I help technical co-founders drowning in frontend backlog by directing AI-assisted workflows to ship production-ready code they do not have to rewrite.',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -20,6 +36,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <a href="#content" className="skip-link focus-visible:inline-block sr-only">Skip to content</a>
         <Nav />
         <main id="content">{children}</main>
+        <Footer />
+        <Analytics />
       </body>
     </html>
   );
