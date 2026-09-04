@@ -6,7 +6,7 @@ export default function DiffBlock({ lines, label }: { lines: DiffLine[]; label?:
       {label && (
         <div className="border-b border-white/10 px-4 py-2 font-mono text-xs text-muted">{label}</div>
       )}
-      <pre className="font-mono text-sm leading-relaxed overflow-x-auto">
+      <pre className="font-mono text-xs sm:text-sm leading-relaxed overflow-x-auto whitespace-pre-wrap break-words">
         {lines.map((line, i) => (
           <div
             key={i}

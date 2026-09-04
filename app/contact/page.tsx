@@ -98,6 +98,7 @@ export default function ContactPage() {
                 aria-invalid={touched.name && !name.trim()}
                 aria-describedby={touched.name && !name.trim() ? 'name-error' : undefined}
                 disabled={isBusy}
+                style={{ fontSize: '16px' }}
                 className="rounded-md border border-white/10 bg-base px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50"
               />
               {touched.name && !name.trim() && (
@@ -120,6 +121,7 @@ export default function ContactPage() {
                 aria-invalid={touched.email && !email.trim()}
                 aria-describedby={touched.email && !email.trim() ? 'email-error' : undefined}
                 disabled={isBusy}
+                style={{ fontSize: '16px' }}
                 className="rounded-md border border-white/10 bg-base px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50"
               />
               {touched.email && !email.trim() && (
@@ -142,6 +144,7 @@ export default function ContactPage() {
                 aria-invalid={touched.message && !message.trim()}
                 aria-describedby={touched.message && !message.trim() ? 'message-error' : undefined}
                 disabled={isBusy}
+                style={{ fontSize: '16px' }}
                 className="rounded-md border border-white/10 bg-base px-3 py-2 text-sm text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 disabled:opacity-50 resize-none"
               />
               {touched.message && !message.trim() && (
