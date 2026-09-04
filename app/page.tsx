@@ -44,6 +44,12 @@ export default function HomePage() {
           <p className="mb-3 font-mono text-xs uppercase tracking-wide text-muted">
             what &quot;reviewed, not just generated&quot; looks like
           </p>
+          <p className="mb-5 max-w-xl text-sm text-muted leading-relaxed">
+            AI generated a settings module. All 22 tests passed. The code still would have broken the app
+            on load — it used Node/CommonJS exports while the browser expected an ES module. The tests
+            never caught it because they never ran it in a browser. I caught it by reading the output
+            instead of trusting the green count.
+          </p>
           <DiffBlock
             label="case-study-copy.md"
             lines={[
@@ -57,6 +63,12 @@ export default function HomePage() {
               },
             ]}
           />
+          <Link
+            href="/work"
+            className="mt-5 inline-block font-mono text-xs text-accent hover:text-accent/80 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent focus-visible:outline-offset-2 rounded"
+          >
+            See the full case study &rarr;
+          </Link>
         </div>
       </div>
     </>
