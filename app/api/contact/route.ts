@@ -1,7 +1,5 @@
 import { Resend } from 'resend';
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
 const MAX_NAME_CHARS = 100;
 const MAX_EMAIL_CHARS = 254;
 const MAX_MESSAGE_CHARS = 2_000;
@@ -72,7 +70,14 @@ export async function POST(req: Request) {
     return Response.json({ error: 'Please enter a valid email address.' }, { status: 400 });
   }
 
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error('[api/contact] RESEND_API_KEY is not configured.');
+    return Response.json({ error: 'Contact form is temporarily unavailable.' }, { status: 503 });
+  }
+
   try {
+    const resend = new Resend(apiKey);
     await resend.emails.send({
       from: 'Portfolio Contact <onboarding@resend.dev>',
       to: 'njokuobinna@gmail.com',
