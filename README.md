@@ -1,128 +1,188 @@
 # Frontend AI Engineering Capstone
 
-Production portfolio site for Emmanuel Chukwukere Obinna. The project demonstrates a reviewed AI-assisted frontend workflow through case studies, a grounded AI chat, an interactive review-pipeline experience, and a live product reference.
+Production portfolio site for Emmanuel Chukwukere Obinna. The project demonstrates a reviewed, disciplined AI-assisted frontend workflow through real case studies, a grounded streaming AI chat assistant, an interactive 3D review-pipeline lab, a GLSL WebGL shader hero, and an automated Frontend Code Review Agent.
 
-**Live production site:** [frontend-ai-capstone-two.vercel.app](https://frontend-ai-capstone-two.vercel.app/)
+**Live Production Site:** [frontend-ai-capstone-two.vercel.app](https://frontend-ai-capstone-two.vercel.app/)  
+**Source Repository:** [github.com/ephysians/frontend-ai-capstone](https://github.com/ephysians/frontend-ai-capstone)
 
-## Routes and features
+---
 
-- `/` - signature hero, proof statement, and reviewed-versus-generated case-study framing.
-- `/chat` - streaming Gemini assistant grounded in the site's case studies, with loading, error, retry, and stop states.
-- `/experience` - interactive React Three Fiber review pipeline with stage selection, workflow lenses, orbit controls, and a static fallback.
-- `/work` - detailed case studies and a link to the deployed Backlog Tracker demo.
-- `/about`, `/contact` - supporting portfolio information and contact route.
-- `/health` - lightweight deployment health response.
-- `/playground` and `/button` - isolated UI experiments.
+## What It Does and For Whom
 
-## Screenshots
+This portfolio is built for **technical co-founders and engineering leaders drowned under frontend backlog queue** who need production-ready frontend code built with AI assistance—code that passes their own architectural review standard without needing to be rewritten.
 
-### Site pages
+Rather than presenting generic project grids or synthetic claims, the portfolio proves the thesis:  
+> *"I ship what AI writes, after I've actually read it."*
 
-![Home page](access-screenshots/page-home.png)
-![Chat page](access-screenshots/page-chat.png)
-![Experience page](access-screenshots/page-experience.png)
-![Work page](access-screenshots/page-work.png)
+---
 
-### Live product reference
+## AI Transparency Framework Note
 
-![Backlog Tracker interface](public/backlog-tracker-ui.png)
+> **AI Transparency Line:** I built this portfolio using Next.js 14, React 18, and TypeScript, directing AI assistants (Claude, Gemini, Amazon Q Developer) as implementation partners. 
+> 
+> **What AI built:** Initial component scaffolding, CSS motion keyframes, starter unit test cases, and repetitive boilerplate.  
+> **What I checked and verified myself:**
+> 1. Audited module export definitions to catch browser CommonJS vs. ES module mismatches (`module.exports` vs. `<script type="module">`) that passed 22 green unit tests in Node but would have crashed in the browser.
+> 2. Verified timer cleanup (`clearTimeout` / `clearInterval`) in custom hooks to prevent memory leaks on unmount.
+> 3. Enforced ReDoS regular expression escaping (`escapeRegExp`) to prevent user input from crashing the thread on special characters.
+> 4. Audited screen-reader accessibility (`aria-live="polite"`, `aria-label`, focus trap restoration, 0 WAVE errors).
+> 5. Verified server-side API key protection so private credentials never leak to client bundles.
 
-## Tech stack
+---
 
-- Next.js 14 App Router, React 18, and TypeScript
-- Tailwind CSS and local UI primitives
-- Vercel deployment
-- Vercel AI SDK with `@ai-sdk/google` and Gemini Flash Lite
-- React Three Fiber, Drei, and Three.js for the review pipeline
-- Vitest, React Testing Library, and Playwright
+## Routes and Features
 
-## Architecture
+- `/` — Signature WebGL GLSL fragment shader hero ("Living Earth"), proof statement, 22-test diff proof block, and demo handoffs.
+- `/chat` — Streaming Gemini Flash Lite assistant grounded in site case studies via the `getCaseStudy` tool schema, with loading, error, retry, and stop controls.
+- `/experience` — Interactive React Three Fiber 3D review pipeline with stage selection, workflow lenses, orbit controls, and static fallback (`?fallback=1`).
+- `/work` — Detailed case studies (*Problem → Decision → Outcome*), Backlog Tracker live demo figure, caught-bug diff, and contact CTA.
+- `/about` — Bio, engineering discipline positioning, resume/CV link, LinkedIn, and GitHub links.
+- `/contact` — Working contact form powered by serverless API route and Resend email delivery with rate limiting.
+- `/health` — Lightweight server-rendered GitHub API health check (`ephysians/frontend-ai-capstone`).
+- `/playground` and `/button` — Isolated accessible UI experiments (Modal, Tabs, Disclosure, Async SendButton lifecycle).
 
-The App Router owns pages and the streaming endpoint at `app/api/chat/route.ts`. The chat configuration and grounded `getCaseStudy` tool live in `lib/`; the client chat UI is in `components/Chat.tsx`. The experience page dynamically loads the client-only 3D scene, while `StaticReviewPipeline` provides the accessible fallback. Shared navigation, controls, and case-study presentation remain componentized under `components/`. Static images and audit captures are kept in `public/` and `access-screenshots/`.
+---
 
-## Engineering and design decisions
+## Architecture Sketch
 
-- The assistant is constrained by a focused system prompt and must use `getCaseStudy` for project questions instead of inventing portfolio claims.
-- The route streams responses, validates request shape and size, and keeps the Google credential on the server.
-- Procedural 3D geometry avoids model and texture downloads. The scene is deferred, caps device pixel ratio at `1.5`, and has a static/reduced-motion fallback.
-- The visual language uses a dark editorial canvas, monospaced labels, a display face, and restrained motion to support the reviewed-engineering theme.
-- Accessibility work includes skip navigation, visible focus states, semantic controls, corrected chat announcements, and live WAVE verification. No speculative changes were made after the final audit.
-
-## Environment variables
-
-Copy `.env.example` to `.env.local` for local development. The placeholder file contains no credentials.
-
-| Variable | Required | Used by | Description |
-| --- | --- | --- | --- |
-| `GOOGLE_GENERATIVE_AI_API_KEY` | Yes for real chat | Server route / Google provider | Google Generative AI credential. Keep it server-only; never prefix it with `NEXT_PUBLIC_`. |
-
-Tests stub the chat request and do not require an AI credential. Do not commit `.env.local` or any real key.
-
-## Local setup
-
-Prerequisite: Node.js 18 or newer and npm.
-
-```bash
-git clone https://github.com/ephysians/frontend-ai-capstone.git
-cd frontend-ai-capstone
-npm install
-cp .env.example .env.local
-# Edit .env.local and set GOOGLE_GENERATIVE_AI_API_KEY for real chat requests.
-npm run dev
+```text
+┌─────────────────────────────────────────────────────────────────────────┐
+│                           CLIENT BROWSER                                │
+│   Sora / Inter / JetBrains Mono  │  Tailwind CSS  │  Local UI Primitives  │
+└──────────────┬───────────────────┬───────────────────┬──────────────────┘
+               │                   │                   │
+               ▼                   ▼                   ▼
+┌─────────────────────────┐ ┌──────────────┐ ┌───────────────────────────┐
+│ WebGL GLSL Shader Hero  │ │ 3D Lab (R3F) │ │ Grounded Chat UI          │
+│ (SignatureShader.tsx)   │ │ (Scene.tsx)  │ │ (components/Chat.tsx)     │
+└─────────────────────────┘ └──────────────┘ └─────────────┬─────────────┘
+                                                           │
+                                                           ▼ Streaming API
+┌─────────────────────────────────────────────────────────────────────────┐
+│                      VERCEL SERVERLESS RUNTIME                          │
+│                                                                         │
+│   ┌───────────────────────────┐         ┌───────────────────────────┐   │
+│   │ app/api/chat/route.ts     │         │ app/api/contact/route.ts  │   │
+│   │ • Rate Limiter (IP-based) │         │ • Rate Limiter (IP-based) │   │
+│   │ • Input Sanitization      │         │ • Input Validation        │   │
+│   │ • Vercel AI SDK           │         │ • Resend Email SDK        │   │
+│   └─────────────┬─────────────┘         └─────────────┬─────────────┘   │
+└─────────────────┼─────────────────────────────────────┼─────────────────┘
+                  │                                     │
+                  ▼                                     ▼
+      ┌───────────────────────┐             ┌───────────────────────┐
+      │ Google AI Studio      │             │ Resend Email Service  │
+      │ (Gemini Flash Lite)   │             │ (njokuobinna@gmail)   │
+      └───────────────────────┘             └───────────────────────┘
 ```
 
-On Windows PowerShell, use `Copy-Item .env.example .env.local` for the copy step. Open [http://localhost:3000](http://localhost:3000).
+---
 
-## Development and testing commands
+## Local Setup Guide (Stranger-Reproducible)
 
-```bash
-npm run dev          # Start Next.js development server
-npm run build        # Create a production build
-npm run start        # Serve the production build
-npm run typecheck    # Run TypeScript without emitting files
-npm run lint         # Run Next.js ESLint checks
-npm run test:unit    # Run Vitest component tests
-npm run test:e2e     # Run Playwright browser tests
-```
+Any reviewer or developer can reproduce this project locally from scratch by following these steps.
 
-Playwright runs Chromium, Firefox, and WebKit projects. Install missing browser binaries with `npx playwright install` when needed. The E2E chat test intercepts `/api/chat`, so it is deterministic and does not call Gemini.
+### Prerequisites
+- Node.js 18.0.0 or higher
+- npm 9.0.0 or higher
+- Git
 
-## Accessibility and performance
+### Installation Steps
 
-The final live WAVE audit reported zero errors, zero contrast errors, and zero alerts on `/`, `/chat`, and `/experience`; `/work` reported zero errors, zero contrast errors, and one alert. The recorded mobile Lighthouse results are documented in [AUDIT.md](AUDIT.md): performance scores were 69, 87, 70, and 87 for `/`, `/chat`, `/experience`, and `/work`, respectively. That file also records accessibility scores, FCP, LCP, TBT, CLS, methodology, and limitations. Results are samples and can vary with emulation, network, and CPU conditions.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/ephysians/frontend-ai-capstone.git
+   cd frontend-ai-capstone
+   ```
 
-## Production deployment
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
 
-1. Import the repository into Vercel or run `vercel` from the repository root.
-2. Set `GOOGLE_GENERATIVE_AI_API_KEY` in the Vercel project Environment Variables for the relevant deployment environments.
-3. Deploy with the default Next.js build settings. Vercel runs `npm run build`.
-4. Verify `/`, `/chat`, `/experience`, `/work`, and `/health` on the deployment URL.
+3. **Configure Environment Variables:**
+   Copy the example environment file:
+   ```bash
+   # On macOS / Linux:
+   cp .env.example .env.local
 
-The current production URL is [https://frontend-ai-capstone-two.vercel.app/](https://frontend-ai-capstone-two.vercel.app/). The chat route exports `maxDuration = 30` for the Vercel streaming function.
+   # On Windows PowerShell:
+   Copy-Item .env.example .env.local
+   ```
 
-### Security and AI-route protection
+   Edit `.env.local` and set your credentials:
+   ```env
+   # Required for live AI chat (/chat)
+   GOOGLE_GENERATIVE_AI_API_KEY=your_google_ai_studio_api_key_here
 
-- Requests are limited to 20 messages, 4,000 characters per message, and 12,000 characters total.
-- A best-effort in-memory limiter allows 10 requests per client IP per 60 seconds and returns HTTP 429 with `Retry-After: 60` when exceeded.
-- Malformed JSON, missing message arrays, invalid message parts, empty conversations, and oversized content are rejected before model invocation.
-- The API key is consumed by the server-only Google provider and is absent from client bundles and `NEXT_PUBLIC_*` variables.
-- The in-memory limit is appropriate for this small Vercel project but is instance-local in a serverless deployment. A shared edge/database limiter should replace it if the route becomes a public high-volume service.
+   # Optional for contact form email delivery (/contact)
+   RESEND_API_KEY=your_resend_api_key_here
+   CONTACT_EMAIL_RECIPIENT=njokuobinna@gmail.com
+   ```
 
-## AI-assisted engineering
+4. **Start Development Server:**
+   ```bash
+   npm run dev
+   ```
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-AI tools were used as an interactive implementation and review partner for the portfolio copy, UI components, chat flow, testing setup, accessibility audit follow-up, and deployment documentation. Prompts supplied the existing repository context and explicit constraints; generated suggestions were kept only when they matched the real case studies and project behavior. The work was validated with TypeScript, ESLint, Vitest, Playwright request fixtures, production builds, live WAVE scans, and recorded mobile Lighthouse runs. Secrets were kept out of prompts, source, and tracked environment examples.
+---
 
-## Browser validation
+## Development and Testing Commands
 
-Playwright provides automated Chromium, Firefox, and WebKit coverage for the chat flow. WebKit is the closest automated check available for Safari; native Safari and mobile Safari still require manual validation on those platforms. The live accessibility results are recorded in `AUDIT.md` and the screenshot evidence is retained in `access-screenshots/`.
+| Command | Action | Description |
+| --- | --- | --- |
+| `npm run dev` | Dev Server | Starts Next.js development server on port 3000 |
+| `npm run build` | Production Build | Compiles Next.js production build |
+| `npm run start` | Serve Build | Runs local server serving production build |
+| `npm run typecheck` | TypeScript Check | Runs `tsc --noEmit` to verify type correctness (0 errors) |
+| `npm run lint` | ESLint | Runs Next.js ESLint checks |
+| `npm run test:unit` | Vitest Suite | Executes 30 unit tests across 5 test files |
+| `npm run test:e2e` | Playwright E2E | Runs Playwright end-to-end browser tests in Chromium |
 
-## Deployment and rollback notes
+---
 
-Vercel keeps each deployment available for inspection and rollback. Promote the last known-good deployment from the Vercel project dashboard when an immediate rollback is needed, then investigate and fix forward on a branch. For source-controlled changes, use a focused Conventional Commit and revert the offending commit rather than rewriting history. Never roll back by committing credentials or removing the audit artifacts.
+## Automated Agent & v2 Eval Results Summary
 
-## Repository standards
+As part of the AI Fluency agent track, an automated **Frontend Code Review Agent** was designed ([`FL-06-Design-Your-Personal-Agent.md`](FL-06-Design-Your-Personal-Agent.md)), built, and evaluated ([`FL-07-Build-Log.md`](FL-07-Build-Log.md)) using MCP tools (`fsRead`, `listDir`).
 
-Use Conventional Commits (`feat`, `fix`, `docs`, `test`, `chore`, and similar), keep changes focused, and run the relevant type, lint, unit, E2E, and build checks before opening a pull request.
+The agent was benchmarked against a 5-case evaluation suite:
+
+| Eval Case | Target File / Input | Evaluation Focus | Result |
+|---|---|---|---|
+| **Case 1 — Vague Form** | Documented Run 1 code | Monolithic validate(), submit-only | ✅ PASS (Flagged accessibility & blur rules) |
+| **Case 2 — CJS/ESM Bug** | Documented Run 2 code | `module.exports` inside `<script type="module">` | ✅ PASS (Flagged runtime crash missed by Jest) |
+| **Case 3 — CopyButton** | `components/ui/CopyButton.tsx` | Clean component with unmount timer cleanup | ✅ PASS (Zero false positives) |
+| **Case 4 — Search Filter** | `lib/search-filter.ts` | Clean utility with `escapeRegExp` | ✅ PASS (Zero false positives) |
+| **Case 5 — Leak Hook** | `tests/lib/use-leak-hook.ts` | Unmounted `setInterval` memory leak | ✅ PASS (Flagged leak at exact line) |
+
+**Evaluation Score:** **5 / 5 eval cases passed (100% accuracy, 0 false positives).**
+
+---
+
+## Known Project Limitations
+
+1. **Serverless Rate Limiting is Instance-Local:** The API rate limiters (`app/api/chat/route.ts` and `app/api/contact/route.ts`) use an in-memory sliding window. On Vercel serverless deployments, instances scale horizontally, so rate-limiting is per-instance rather than globally centralized via Redis.
+2. **Mobile GPU Thermal & Performance Budget:** The WebGL GLSL shader (`SignatureShader.tsx`) and 3D review scene (`Experience.tsx`) cap device pixel ratio at `1.5` and pause animation when hidden. However, older mobile GPUs may still experience frame drops under prolonged use.
+3. **Serverless Execution Timeout:** Streaming chat route functions cap `maxDuration` at 30 seconds (Vercel Hobby limit). Extremely long, multi-step queries could potentially time out if Gemini response generation stalls.
+4. **Model Hallucination Boundary:** Although the chat assistant is constrained by system prompts and grounded via the `getCaseStudy` tool schema, LLMs can occasionally generate stylistic prose variations when asked questions outside the documented case studies.
+
+---
+
+## Production Deployment & Verification
+
+* **Platform:** Vercel (Production branch `main`).
+* **Health Endpoint:** [`/health`](https://frontend-ai-capstone-two.vercel.app/health) verifies server-side GitHub API connectivity.
+* **Accessibility Verification:** Live WAVE audit reported **0 errors, 0 contrast errors, and 0 alerts** across `/`, `/chat`, and `/experience`; `/work` reported 0 errors, 0 contrast errors, and 1 reviewed alert.
+* **Lighthouse Mobile Scores:** Captured in [`AUDIT.md`](AUDIT.md) (`/chat`: 87 Perf / 96 Access; `/experience`: 70 Perf / 95 Access; `/work`: 87 Perf / 100 Access).
+
+---
+
+## Master Deliverables Index
+
+All track assignment documents, technical walkthroughs, audit logs, and agent specifications are tracked in the repository root and indexed in [`INDEX.md`](INDEX.md).
+
+---
 
 ## License
 
